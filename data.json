@@ -1,0 +1,20 @@
+{
+    "roof":["roof"],
+    "siding":["siding"],
+    "windows":["windows"],
+    "doors":["doors"],
+    "fence":["fence"],
+    "concrete":["concrete driveway and walkways"],
+    "Landscaping":["landscaping (lawn, trees, and shrubs)"],
+    "deck & patio":["deck & patio"],
+    "floors":["floors"],
+    "walls-ceilings":["walls, ceilings, painting, drywall, insulation, trims"],
+    "bathrooms":["bathrooms, Vanity, installation, plumbing, tile work, fixtures"],
+    "kitchen":["kitchen cabinets, countertops, appliances, plumbing, backsplash, floor, appliances"],
+    "plumbing":["plumbing, plumbing repairs or updrades"],
+    "electrical":["electrical"],
+    "hvac":["hvac"],
+    "permits":["permits"],
+    "structural":["structural, foundation repairs, basement, waterproofing, termite damage, load bearing wall,mold"],
+    "miscellaneous":["miscellaneous, food for workers, dumpsters, cleaning, food for you, gas, demo"]
+}
