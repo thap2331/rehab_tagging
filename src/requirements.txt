@@ -1,0 +1,5 @@
+openai
+python-dotenv==1.0.1
+# sentence-transformers
+pinecone-client==5.0.1
+requests

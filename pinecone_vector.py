@@ -4,7 +4,7 @@ import os
 import json
 from dotenv import load_dotenv
 
-from utils import Utils, Embeddings
+from src.utils import Utils, Embeddings
 
 load_dotenv()
 

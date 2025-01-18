@@ -1,0 +1,11 @@
+version = 0.1
+[default.deploy.parameters]
+stack_name = "retagstack"
+resolve_s3 = true
+s3_prefix = "retagstack"
+region = "us-west-2"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+disable_rollback = true
+parameter_overrides = "PineconeApiKey=\"retag\""
+image_repositories = []

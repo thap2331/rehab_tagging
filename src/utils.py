@@ -1,7 +1,6 @@
 import json
 from openai import OpenAI
-from sentence_transformers import SentenceTransformer
-from pinecone.grpc import PineconeGRPC as Pinecone
+from pinecone import Pinecone
 from dotenv import load_dotenv
 import os
 
@@ -10,7 +9,6 @@ load_dotenv()
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
 pc = Pinecone(api_key=PINECONE_API_KEY)
 
-openaiclient = OpenAI()
 
 class Utils:
     def read_json(self, file_path):
@@ -21,7 +19,7 @@ class Utils:
 class Embeddings:
     
     def openai_embedding(self, data, model="text-embedding-3-large"):
-        
+        openaiclient = OpenAI()
         return openaiclient.embeddings.create(
             input = data, 
             model=model, 
@@ -59,3 +57,25 @@ class Embeddings:
 
         return query_embedding
 
+class QueryVector:
+    def __init__(self):
+        self.index_name = "tags"
+        self.index = pc.Index(self.index_name)
+        self.embed = Embeddings()
+
+    def query_vector(self, query):
+        # Generate embeddings for the query
+        pinecone_query_embeddings_results = self.embed.pinecone_query_embeddings(query)
+
+        # Search the index for the three most similar vectors
+        results = self.index.query(
+            namespace="re-tags",
+            vector=pinecone_query_embeddings_results[0].values,
+            top_k=1,
+            include_values=False,
+            include_metadata=True
+        )
+        # check if the parent tag is in the results
+        parent_tag = {'parent_tag':results['matches'][0]['metadata'].get('parent_tag',None)}
+
+        return parent_tag

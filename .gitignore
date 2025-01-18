@@ -5,3 +5,5 @@ chroma
 tagenv
 data.json
 test
+.aws-sam
+env.json
