@@ -9,7 +9,7 @@ client = chromadb.Client()
 client = chromadb.PersistentClient(path="./chroma", settings=Settings(allow_reset=True))
 client.reset()
 
-from utils import Utils, Embeddings
+from src.utils import Utils, Embeddings
 
 # Create a collection to store vectors
 collection = client.create_collection("tag_store")

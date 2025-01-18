@@ -1,0 +1,56 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Sample SAM Template for a simple Lambda function
+
+Resources:
+  RETagLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: RETag
+      Handler: app.lambda_handler
+      Runtime: python3.10
+      CodeUri: ./src/
+      FunctionUrlConfig:
+        AuthType: NONE
+      Description: A simple Lambda function
+      MemorySize: 128
+      Timeout: 300
+      Environment:
+        Variables:
+          PINECONE_API_KEY: !Sub "{{resolve:secretsmanager:${PineconeApiKey}:SecretString:PINECONE_API_KEY}}"
+      Policies:
+        - Version: "2012-10-17"
+          Statement:
+            - Sid: AllowLambdaSelfInvoke
+              Effect: Allow
+              Action:
+                - lambda:InvokeFunction
+                - secretsmanager:GetSecretValue
+              Resource: !Sub "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:RETag*"
+      Events:
+        GetApiEvent:
+          Type: Api
+          Properties:
+            Path: /hello
+            Method: get
+        PostApiEvent:
+          Type: Api
+          Properties:
+            Path: /hello
+            Method: post
+
+Parameters:
+  PineconeApiKey:
+    Type: String
+    Description: "API Key for Pinecone in aws secrets manager"
+    Default: retag
+
+# Outputs:
+  # RETagLambdaFunctionArn:
+  #   Description: "ARN of the Lambda Function"
+  #   Value: !GetAtt RETagLambdaFunction.Arn
+  # RETagFunctionUrl:
+  #   Description: "URL of the Lambda Function"
+  #   Value: !GetAtt RETagFunctionUrl.FunctionUrl
+
