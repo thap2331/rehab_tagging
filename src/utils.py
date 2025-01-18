@@ -57,3 +57,25 @@ class Embeddings:
 
         return query_embedding
 
+class QueryVector:
+    def __init__(self):
+        self.index_name = "tags"
+        self.index = pc.Index(self.index_name)
+        self.embed = Embeddings()
+
+    def query_vector(self, query):
+        # Generate embeddings for the query
+        pinecone_query_embeddings_results = self.embed.pinecone_query_embeddings(query)
+
+        # Search the index for the three most similar vectors
+        results = self.index.query(
+            namespace="re-tags",
+            vector=pinecone_query_embeddings_results[0].values,
+            top_k=1,
+            include_values=False,
+            include_metadata=True
+        )
+        # check if the parent tag is in the results
+        parent_tag = {'parent_tag':results['matches'][0]['metadata'].get('parent_tag',None)}
+
+        return parent_tag
