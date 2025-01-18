@@ -40,16 +40,3 @@ collection.add(
     embeddings=embeddings,
     ids=ids
 )
-
-# query = 'kitchen'
-# print(collection.peek())
-# # query_vector = embed.openai_embedding(query)
-# query_vector = embed.hf_sentence_transformers_embedding(query)
-
-# results = collection.query(
-#     query_embeddings=[query_vector],
-#     n_results=2  # Number of nearest neighbors to retrieve
-# )
-
-
-# print(results)
